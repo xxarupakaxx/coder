@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 //#include <atcoder/all>
-#define rep(i, n) for (int i = 0; i < (n); ++i)
+#define rep(i, n) for (int i = 1; i <= (n); ++i)
 // using namespace atcoder;
 using namespace std;
 using ll = long long;
@@ -76,18 +76,9 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    string s, t1, t2;
-    cin >> s;
-    ll n = s.size();
-    rep(i, (n - 1) / 2) { t1 += s[n/2-i-1]; }
-    for (ll i =0; i < (n)/2;i++){
-        t2 += s[(n+3)/2-i+1];
-    }
-    string s1 = s.substr(0, (n - 1) / 2);
-    string s2 = s.substr((n + 3) / 2-1, n - 1);
-    if (t1 == s1 && t2 == s2) cout << "Yes" << endl;
-    else
-        cout << "No" << endl;
-
-   // cout << t1 <<" "<< s1 <<" "<< t2 <<" "<< s2 << endl;
+    ll n;
+    cin >> n;
+    ll sum = 0;
+    rep(i, n) { sum += (n - 1) / i; }
+    cout << sum << endl;
 }
