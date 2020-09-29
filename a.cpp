@@ -76,17 +76,18 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
+    string s, t1, t2;
+    cin >> s;
+    ll n = s.size();
+    rep(i, (n - 1) / 2) { t1 += s[n/2-i-1]; }
+    for (ll i =0; i < (n)/2;i++){
+        t2 += s[(n+3)/2-i+1];
+    }
+    string s1 = s.substr(0, (n - 1) / 2);
+    string s2 = s.substr((n + 3) / 2-1, n - 1);
+    if (t1 == s1 && t2 == s2) cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
 
-        ll n, a, b;
-        cin >> n >> a >> b;
-        int sum = 0;
-        for (int i = 0; i < n / (a + b); i++) {
-            sum += a;
-            if (n % (a + b) > b) {
-                sum += a;
-            } else
-                sum += n % (a + b);
-        }
-        cout << sum << endl;
-    
+   // cout << t1 <<" "<< s1 <<" "<< t2 <<" "<< s2 << endl;
 }
