@@ -76,9 +76,17 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int a, b, c;
-    cin >> a >> b >> c;
-    if (a - b >= c) cout << 0 << endl;
-    else
-        cout << c - a + b << endl;
+
+        ll n, a, b;
+        cin >> n >> a >> b;
+        int sum = 0;
+        for (int i = 0; i < n / (a + b); i++) {
+            sum += a;
+            if (n % (a + b) > b) {
+                sum += a;
+            } else
+                sum += n % (a + b);
+        }
+        cout << sum << endl;
+    
 }
