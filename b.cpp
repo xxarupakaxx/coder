@@ -76,7 +76,17 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int a, b;
-    cin >> a >> b;
-    cout << (a + b) / 2 << " " << (a - b) / 2 << endl;
+    int n;
+    string s;
+    cin >> n >> s;
+    string t = "";
+    int sum = 0;
+    rep(i, n) {
+        t += s[i];
+        rep(j, (ll)t.size()) {
+            if (t[j] == 'A') {
+                if (t[j + 1] == 'T') sum++;
+            }
+        }
+    }
 }
