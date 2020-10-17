@@ -76,7 +76,23 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int a, b;
-    cin >> a >> b;
-    cout << (a + b) / 2 << " " << (a - b) / 2 << endl;
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(10000);
+    rep(i, n) cin >> a[i];
+    bool exist = false;
+    for (int bit = 0; bit<(1<<n);bit++){
+        int sum = 0;
+        rep(i,n){
+            if(bit & (1<<i)){
+                sum += a[i];
+            }
+        }
+
+        if (sum == k) exist = true;
+
+    }
+    if (exist) cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
 }
