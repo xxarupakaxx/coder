@@ -76,17 +76,18 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n;
-    string s;
-    cin >> n >> s;
-    string t = "";
-    int sum = 0;
-    rep(i, n) {
-        t += s[i];
-        rep(j, (ll)t.size()) {
-            if (t[j] == 'A') {
-                if (t[j + 1] == 'T') sum++;
-            }
+    int n,v;
+    cin >> n>>v;
+    vector<int> a(n);
+    rep(i, n) cin >> a[i];
+    int found_id = -1;
+    int sum;
+    rep(i,n){
+        
+        if (a[i] == v) {
+            sum++;
         }
+       
     }
+    cout << found_id << endl;
 }
