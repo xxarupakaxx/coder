@@ -71,20 +71,26 @@ int divideReverse(int x) {
     return reverse;
 }
 
+int how_many_times(int N) {
+    int exp = 0;
+    while (N % 2 == 0) N /= 2, ++exp;
+    return exp;
+}
+
 int main() {
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    rep(i, n) cin >> a[i];
-    int sup = 10000;
-    int t = -1;
-    rep(i,n){
-        if (sup > a[i]) sup = a[i];
-        if (t < a[i]) t = a[i];
+    int N;
+    cin >> N;
+    vector<int> A(N);
+    for (int i = 0; i < N; ++i) cin >> A[i];
+
+    // 2 で何回割れるかの最小値を求める
+    int result = 1000000;
+    for (auto a : A) {
+        result = min(result, how_many_times(a));
     }
-    cout << t-sup << endl;
+    cout << result << endl;
 }
