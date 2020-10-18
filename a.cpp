@@ -94,34 +94,15 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    string s, t;
-    cin >> s >> t;
-    vector<vector<int>> dp(s.size() + 1, vector<int>(t.size() + 1, 10000));
+    int n;
+    cin >> n;
+    vector<vector<ll>> c(n + 1, vector<ll>(n + 1));
+    rep(i,n+1){
+        rep(j, n + 1) { cin >> c[i][j]; }
+    }
+    vector<ll> dp(n + 1, 1000000);
+    dp[0] = 0;
 
-    dp[0][0]=0;
-
-    for (int i = 0; i <= s.size();i++){
-        for (int j = 0; i <= t.size();j++){
-            if(i>0 &&j>0){
-                if(s[i-1]==t[j-1]){
-                    chmin(dp[i][j], dp[i - 1][j - 1]);
-
-                }
-                else {
-                    chmin(dp[i][j], dp[i - 1][j - 1] + 1);
-
-                }}
-                if(i>0){
-                    chmin(dp[i][j], dp[i - 1][j] + 1);
-
-                }
-                if(j>0){
-                    chmin(dp[i][j], dp[i ][j- 1] + 1);
-
-                }
-
-
-            
-        } }
-    cout << dp[s.size()][t.size()] << endl;
+    rep(i, n + 1) rep(j, i) { chmin(dp[i], dp[j] + c[j][i]); }
+    cout << dp[n] << endl;
 }
