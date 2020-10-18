@@ -27,19 +27,24 @@ using P = pair<ll, ll>;
 #define F first                                  // pairの一つ目の要素
 #define S second                                 // pairの二つ目の要素
 #define CST(x) cout << fixed << setprecision(x)  //小数点以下の桁数指定
-template <class T> inline bool chmin(T &a, T b) {
+template <class T> inline bool bchmin(T &a, T b) {
     if (a > b) {
         a = b;
         return true;
     }
     return false;
 }
-template <class T> inline bool chmax(T &a, T b) {
+template <class T> inline bool bchmax(T &a, T b) {
     if (a < b) {
         a = b;
         return true;
     }
     return false;
+}
+template<class T> void chmin(t& a,T b){
+    if(a>b){
+        a = b;
+    }
 }
 int gcd(int a, int b) {
     if (b == 0)
@@ -76,18 +81,15 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    ll k;
-    cin >> k;
-    vector<ll> h(k);
-    rep(i, k) cin >> h[i];
-    vector<ll> dp(k, 10000);
+    int n;
+    cin >> n;
+    vector<ll> h(n);
+    rep(i, n) cin > : > h[i];
 
+    vector<ll> dp(n, 100000);
     dp[0] = 0;
-    rep(i,k){
-        if (i == 1) dp[i] == abs(h[i] - h[i - 1]);
-        else
-            dp[i] = min(abs(h[i - 1] - h[i]) + dp[i-1], dp[i-2] + abs(h[i - 2] - h[i]));
-
+    rep(i, n) { chmin(dp[i], dp[i - 1] + abs(h[i - 1] - h[i]));
+    if(i>1)chmin(dp[i], dp[i - 1] + abs(h[i - 2] - h[i])); 
     }
-    cout << dp[k - 1] << endl;
+    cout << dp[n - 1] << endl;
 }
