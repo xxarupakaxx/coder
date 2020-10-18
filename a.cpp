@@ -41,7 +41,7 @@ template <class T> inline bool bchmax(T &a, T b) {
     }
     return false;
 }
-template<class T> void chmin(t& a,T b){
+template<class T> void chmin(T& a,T b){
     if(a>b){
         a = b;
     }
@@ -75,21 +75,28 @@ int divideReverse(int x) {
     }
     return reverse;
 }
+int n;
+vector<ll> h;
+vector<ll> dp;
+ll rec(int i) {
+    if (dp[i] < 100000) return dp[i];
+    if (i == 0) return 0;
+
+    ll res = 100000;
+
+    chmin(res, rec(i - 1) + abs(h[i] - h[i - 1]));
+    if (i > 1) chmin(res, rec(i - 2) + abs(h[i - 2] - h[i]));
+    return dp[i] = res;
+}
 
 int main() {
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n;
     cin >> n;
-    vector<ll> h(n);
-    rep(i, n) cin > : > h[i];
-
-    vector<ll> dp(n, 100000);
-    dp[0] = 0;
-    rep(i, n) { chmin(dp[i], dp[i - 1] + abs(h[i - 1] - h[i]));
-    if(i>1)chmin(dp[i], dp[i - 1] + abs(h[i - 2] - h[i])); 
-    }
-    cout << dp[n - 1] << endl;
+    h.resize(n);
+    dp.assign(n, 100000);
+    rep(i, n) cin >> h[i];
+    cout << rec(n - 1) << endl;
 }
