@@ -76,23 +76,25 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(10000);
-    rep(i, n) cin >> a[i];
-    bool exist = false;
-    for (int bit = 0; bit<(1<<n);bit++){
-        int sum = 0;
-        rep(i,n){
-            if(bit & (1<<i)){
-                sum += a[i];
+    string s;
+    cin >> s;
+    ll sum = 0;
+    int n = s.size();
+    
+    for (int bit= 0; bit< (1 << n-1); bit++) {
+        ll tmp = 0;
+        for (int i = 0; i < n-1; i++) {
+            tmp *= 10;
+           
+            tmp += s[i] - '0';
+            if (bit & (1<<i)) {
+                sum += tmp;
+                tmp = 0;
             }
         }
-
-        if (sum == k) exist = true;
-
+        tmp *= 10;
+        tmp += s.back() - '0';
+        sum += tmp;
     }
-    if (exist) cout << "Yes" << endl;
-    else
-        cout << "No" << endl;
+    cout << sum << endl;
 }

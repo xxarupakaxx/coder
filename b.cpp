@@ -76,21 +76,38 @@ int how_many_times(int N) {
     while (N % 2 == 0) N /= 2, ++exp;
     return exp;
 }
+int GCD(int m,int n){
+    if (n == 0) return m;
 
+    return GCD(n,m%n)
+}
+bool func(int i,int w,const vector<int> &a){
+    if(i==0){
+        if (w == 0) return true;
+        else
+            return false;
+    }
+
+    if (func(i, w, a)) return true;
+    if (func(i, w - a[i - 1], a)) return true;
+    return false;
+}
+vector<int> memo;
+int tribo(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 0;
+    if (n == 2) return 1;
+
+    if (memo[n] != -1) return memo[n];
+
+    return memo[n] = tribo(n - 1) + tribo(n - 2) + tribo(n - 3);
+}
 int main() {
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int N;
-    cin >> N;
-    vector<int> A(N);
-    for (int i = 0; i < N; ++i) cin >> A[i];
-
-    // 2 で何回割れるかの最小値を求める
-    int result = 1000000;
-    for (auto a : A) {
-        result = min(result, how_many_times(a));
-    }
-    cout << result << endl;
+    memo.assign(50, -1);
+    tribo(49);
+    
 }
