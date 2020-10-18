@@ -34,12 +34,12 @@ template <class T> inline bool bchmin(T &a, T b) {
     }
     return false;
 }
-template <class T> inline bool bchmax(T &a, T b) {
+template <class T> void chmax(T &a, T b) {
     if (a < b) {
         a = b;
-        return true;
+        
     }
-    return false;
+    
 }
 template<class T> void chmin(T& a,T b){
     if(a>b){
@@ -94,9 +94,22 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    cin >> n;
-    h.resize(n);
-    dp.assign(n, 100000);
-    rep(i, n) cin >> h[i];
-    cout << rec(n - 1) << endl;
+    int n;
+    ll w;
+    cin >> n >> w;
+
+    vector<ll> weight(n), value(n);
+    rep(i, n) cin >> weight[i] >> value[i];
+    vector<vector<ll>> dp(n + 1, vector<ll>(w + 1, 0));
+
+    rep(i,n){
+        rep(j,w){
+            if(j-weight[i]>=0){
+                chmax(dp[i + 1][w], dp[i][w - weight[i]] + value[i]);
+            }
+
+            chmax(dp[i + 1][w], dp[i][w]);
+        }
+    }
+    cout << dp[n][w] << endl;
 }
