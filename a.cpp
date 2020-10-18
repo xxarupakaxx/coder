@@ -94,22 +94,34 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n;
-    ll w;
-    cin >> n >> w;
+    string s, t;
+    cin >> s >> t;
+    vector<vector<int>> dp(s.size() + 1, vector<int>(t.size() + 1, 10000));
 
-    vector<ll> weight(n), value(n);
-    rep(i, n) cin >> weight[i] >> value[i];
-    vector<vector<ll>> dp(n + 1, vector<ll>(w + 1, 0));
+    dp[0][0]=0;
 
-    rep(i,n){
-        rep(j,w){
-            if(j-weight[i]>=0){
-                chmax(dp[i + 1][w], dp[i][w - weight[i]] + value[i]);
-            }
+    for (int i = 0; i <= s.size();i++){
+        for (int j = 0; i <= t.size();j++){
+            if(i>0 &&j>0){
+                if(s[i-1]==t[j-1]){
+                    chmin(dp[i][j], dp[i - 1][j - 1]);
 
-            chmax(dp[i + 1][w], dp[i][w]);
-        }
-    }
-    cout << dp[n][w] << endl;
+                }
+                else {
+                    chmin(dp[i][j], dp[i - 1][j - 1] + 1);
+
+                }}
+                if(i>0){
+                    chmin(dp[i][j], dp[i - 1][j] + 1);
+
+                }
+                if(j>0){
+                    chmin(dp[i][j], dp[i ][j- 1] + 1);
+
+                }
+
+
+            
+        } }
+    cout << dp[s.size()][t.size()] << endl;
 }
