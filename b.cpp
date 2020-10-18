@@ -92,22 +92,41 @@ bool func(int i,int w,const vector<int> &a){
     if (func(i, w - a[i - 1], a)) return true;
     return false;
 }
-vector<int> memo;
-int tribo(int n) {
-    if (n == 0) return 0;
-    if (n == 1) return 0;
-    if (n == 2) return 1;
+vector<vector<int>> memo;
+bool func(int i,int w,const vector<ll>&a){
+     // ベースケース
+    if (i == 0) {
+        if (w == 0) return true;
+        else return false;
+    }
 
-    if (memo[n] != -1) return memo[n];
+    // メモをチェック (すでに計算済みならば答えをリターンする)
+    if (memo[i][w] != -1) return memo[i][w];
 
-    return memo[n] = tribo(n - 1) + tribo(n - 2) + tribo(n - 3);
+    // a[i - 1] を選ばない場合
+    if (func(i - 1, w, a)) return memo[i][w] = 1;
+
+    // a[i - 1] をぶ場合
+    if (func(i - 1, w - a[i - 1], a)) return memo[i][w] = 1;
+
+    // どちらも false の場合は false
+    return memo[i][w] = 0;
 }
+
 int main() {
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    memo.assign(50, -1);
-    tribo(49);
-    
+    // 入力
+    int N, W;
+    cin >> N >> W;
+    vector<int> a(N);
+    for (int i = 0; i < N; ++i) cin >> a[i];
+
+    // 再帰的に解く
+    memo.assign(N+1, vector<int>(W+1, -1));
+    if (func(N, W, a)) cout << "Yes" << endl;
+    else cout << "No" << endl;
+
 }
