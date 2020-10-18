@@ -76,18 +76,15 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    int n,v;
-    cin >> n>>v;
+    int n;
+    cin >> n;
     vector<int> a(n);
     rep(i, n) cin >> a[i];
-    int found_id = -1;
-    int sum;
+    int sup = 10000;
+    int t = -1;
     rep(i,n){
-        
-        if (a[i] == v) {
-            sum++;
-        }
-       
+        if (sup > a[i]) sup = a[i];
+        if (t < a[i]) t = a[i];
     }
-    cout << found_id << endl;
+    cout << t-sup << endl;
 }
