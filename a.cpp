@@ -76,25 +76,18 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    string s;
-    cin >> s;
-    ll sum = 0;
-    int n = s.size();
-    
-    for (int bit= 0; bit< (1 << n-1); bit++) {
-        ll tmp = 0;
-        for (int i = 0; i < n-1; i++) {
-            tmp *= 10;
-           
-            tmp += s[i] - '0';
-            if (bit & (1<<i)) {
-                sum += tmp;
-                tmp = 0;
-            }
-        }
-        tmp *= 10;
-        tmp += s.back() - '0';
-        sum += tmp;
+    ll k;
+    cin >> k;
+    vector<ll> h(k);
+    rep(i, k) cin >> h[i];
+    vector<ll> dp(k, 10000);
+
+    dp[0] = 0;
+    rep(i,k){
+        if (i == 1) dp[i] == abs(h[i] - h[i - 1]);
+        else
+            dp[i] = min(abs(h[i - 1] - h[i]) + dp[i-1], dp[i-2] + abs(h[i - 2] - h[i]));
+
     }
-    cout << sum << endl;
+    cout << dp[k - 1] << endl;
 }

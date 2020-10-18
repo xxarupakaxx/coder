@@ -79,7 +79,7 @@ int how_many_times(int N) {
 int GCD(int m,int n){
     if (n == 0) return m;
 
-    return GCD(n,m%n)
+    return GCD(n, m % n);
 }
 bool func(int i,int w,const vector<int> &a){
     if(i==0){
