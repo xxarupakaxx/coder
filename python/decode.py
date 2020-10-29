@@ -5,7 +5,10 @@ def enc(k, m):
     c = ""
 
     for i in range(leng):
-        code = ord(m[i])    # i 文字目のコードを得る
+        code = ord(m[i])  # i 文字目のコードを得る
+        if code >= 65 and code <= 90:
+            c =c+chr(code)
+            continue
         sa = code - code_a  # 文字 a からの差分
         if sa > kosu - k:
             sa = k + sa
