@@ -1,24 +1,48 @@
-# junkan.py
-# 配列の使い方の練習（循環小数を循環するまで求める）
-# 入力: d
-# 出力: 1/d の各桁を循環するまで求める
-
 import time
+# https://hack.jp/?p=254
+# https://hack.jp/?p=252
+
+def solve(n):
+    turtle = 1
+    rabit = 1
+    start = 0
+    end = 0
+
+    if n > 0:
+        while True:
+            turtle = (turtle * 10) % n
+            rabit=(rabit*10)%n
+            rabit = (rabit * 10) % n
+            if turtle == rabit :break
+            
+        if rabit != 0:
+            rabit = 1
+            start = 1
+            while turtle != rabit:
+                start = start + 1
+                turtle = (turtle * 10) % n
+                rabit = (rabit * 10) % n
+            rabit = (rabit * 10) % n
+            end =start
+            while turtle != rabit:
+                end = end + 1
+                rabit = (rabit * 10) % n
+    
+    return start, end
 
 print("分母 d を下さい")
 d = int(input())
 print("1 / ", d, " を求めます")
 
-stop = False
-leng = 0
+s, t = solve(d)
 x = 1
-while not stop:
+print(s,t)
+for i in range(0, t):
     x = x * 10
-    q = x // d
-    leng = leng + 1
-    print(leng, ":", q)
-    time.sleep(0.5)    
+    q = x//d
+    print(i + 1, ":", q)
     x = x % d
-    if x == 0: 
-        stop = True
+    
+            
+
 

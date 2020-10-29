@@ -4,9 +4,9 @@ import numpy as np  # <=配列操作
 
 def zero_one(image):
 
-    output_width = 150  # 出力時の横の文字数になります
+    output_width = 75  # 出力時の横の文字数になります
     font_aspect = 1.8  # 1:1.8が最適かも(文字にしたとき文字は縦長なので高さを調節します。)
-    ikichi = 180  # 調節してください
+    ikichi = 150  # 調節してください
 
     im_gray = cv2.imread(image, 0)  # グレー化
 
@@ -25,7 +25,7 @@ def zero_one(image):
 
     th[th != 0] = 1  # この場合白色部分は1に変換されます。
 
-    f = open('write1.txt', 'w')  # 読み込み開始
+    f = open('write0.txt', 'w')  # 読み込み開始
 
     for array in th:  # 各行について
 
@@ -46,4 +46,4 @@ def zero_one(image):
 
 print("start")
 
-zero_one("a.png")
+zero_one("1447.png")
