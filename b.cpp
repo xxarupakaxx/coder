@@ -112,6 +112,24 @@ bool func(int i,int w,const vector<ll>&a){
     // どちらも false の場合は false
     return memo[i][w] = 0;
 }
+int n;
+vector<vector<int>> Time(n, vector<int>(n));
+int greedy(){
+    vector <int> ave(n);
+    rep(i, n) { int sum = 0;
+        rep(j, n) {
+            if (i == j) sum-=Time[i][j];
+            sum += Time[i][j];
+        }
+        ave[i] = sum/n;
+    }
+    rep(i,n){
+        rep(j, n) { Time[i][j] -= ave[i] + ave[j];
+         }
+    }
+}
+
+ 
 
 int main() {
     cin.tie(0);

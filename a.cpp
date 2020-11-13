@@ -94,22 +94,7 @@ int main() {
     cout.tie(0);
     ios::sync_with_stdio(false);
 
-    ll n;
-    cin >> n;
-    vector<ll> a(n), b(n), c(n);
-    rep(i, n) cin >> a[i] >> b[i] >> c[i];
-
-    vector<ll> dp(n + 1, 0);
-    dp[0] = 0;
-    for(int i=1;i<=n;i++){
-       if(i==1) chmax(dp[i], dp[i - 1] + max(max(a[i-1], b[i-1]), c[i-1]));
-      if(i>1){
-            if(dp[i-1]-dp[i-2]==c[i-2])
-                chmax(dp[i], dp[i - 1] + max(a[i - 1], b[i - 1])), cout << dp[i] << endl;
-            
-            else if(dp[i-1]-dp[i-2]==b[i-2])chmax(dp[i], dp[i - 1] +max(a[i-1],c[i-1])), cout << dp[i] << endl;
-            else chmax(dp[i], dp[i - 1] +max(c[i-1],b[i-1])), cout << dp[i] << endl;
-        }
-    }
-    cout << dp[n] << endl;
+    vector<vector<int>> a(3);
+    a.at(0).push_back(0);
+    rep(i, 7) rep(j, 1) { cout << a.at(i).at(j); }
 }
