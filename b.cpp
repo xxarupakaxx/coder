@@ -1,150 +1,64 @@
-#include <bits/stdc++.h>
-//#include <atcoder/all>
-#define rep(i, n) for (int i = 0; i < (n); ++i)
-// using namespace atcoder;
+#include <iostream>
+#include <bitset>
 using namespace std;
-using ll = long long;
-using P = pair<ll, ll>;
-//マクロ
-// forループ関係
-//引数は、(ループ内変数,動く範囲)か(ループ内変数,始めの数,終わりの数)、のどちらか
-// Dがついてないものはループ変数は1ずつインクリメントされ、Dがついてるものはループ変数は1ずつデクリメントされる
-#define FOR(i, a, b) for (ll i = a; i <= (ll)(b); i++)
-#define _GLIBCXX_DEBUG
-// xにはvectorなどのコンテナ
-#define ALL(x) (x).begin(), (x).end()  // sortなどの引数を省略したい
-#define SIZE(x) ((ll)(x).size())       // sizeをsize_tからllに直しておく
-#define MAX(x) *max_element(ALL(x))    //最大値を求める
-#define MIN(x) *min_element(ALL(x))    //最小値を求める
-//定数
-#define INF 1000000000000  // 10^12:極めて大きい値,∞
-#define inf 2147483647     // int値の最大値
-#define MOD 1000000007     // 10^9+7:合同式の法
-#define MAXR 100000        // 10^5:配列の最大のrange(素数列挙などで使用)
-//略記
-#define PB push_back                             // vectorヘの挿入
-#define MP make_pair                             // pairのコンストラクタ
-#define F first                                  // pairの一つ目の要素
-#define S second                                 // pairの二つ目の要素
-#define CST(x) cout << fixed << setprecision(x)  //小数点以下の桁数指定
-template <class T> inline bool chmin(T &a, T b) {
-    if (a > b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-template <class T> inline bool chmax(T &a, T b) {
-    if (a < b) {
-        a = b;
-        return true;
-    }
-    return false;
-}
-int gcd(int a, int b) {
-    if (b == 0)
-        return a;
-    else
-        return gcd(b, a % b);
-}
-int lcm(int a, int b) {
-    return a * b / gcd(a, b);
-}
-//各桁の和
-int sumDight(int x) {
-    int sum = 0;
-    while (x > 0) {
-        sum += (x % 10);
-        x /= 10;
-    }
-    return sum;
-}
-//回文数
-int divideReverse(int x) {
-    int reverse = 0;
-    int r;
-    while (x > 0) {
-        r = x % 10;
-        reverse = reverse * 10 + r;
-        x /= 10;
-    }
-    return reverse;
-}
 
-int how_many_times(int N) {
-    int exp = 0;
-    while (N % 2 == 0) N /= 2, ++exp;
-    return exp;
-}
-int GCD(int m,int n){
-    if (n == 0) return m;
+const int INF = 100000000; // 十分大きな値
 
-    return GCD(n, m % n);
-}
-bool func(int i,int w,const vector<int> &a){
-    if(i==0){
-        if (w == 0) return true;
-        else
-            return false;
+/* 入力 */
+int N;
+int dist[21][21];
+
+/* メモ再帰 */
+int dp[(1<<20) + 1][21]; // dpテーブルは余裕をもったサイズにする
+int rec(int bit, int v)
+{
+    // すでに探索済みだったらリターン
+    if (dp[bit][v] != -1) return dp[bit][v];
+
+    // 初期値
+    if (bit == (1<<v)) {
+        return dp[bit][v] = 0;
     }
 
-    if (func(i, w, a)) return true;
-    if (func(i, w - a[i - 1], a)) return true;
-    return false;
-}
-vector<vector<int>> memo;
-bool func(int i,int w,const vector<ll>&a){
-     // ベースケース
-    if (i == 0) {
-        if (w == 0) return true;
-        else return false;
-    }
+    // 答えを格納する変数
+    int res = INF;
 
-    // メモをチェック (すでに計算済みならば答えをリターンする)
-    if (memo[i][w] != -1) return memo[i][w];
+    // bit の v を除いたもの
+    int prev_bit = bit & ~(1<<v);
 
-    // a[i - 1] を選ばない場合
-    if (func(i - 1, w, a)) return memo[i][w] = 1;
+    // v の手前のノードとして u を全探索
+    for (int u = 0; u < N; ++u) {
+        if (!(prev_bit & (1<<u))) continue; // u が prev_bit になかったらダメ
 
-    // a[i - 1] をぶ場合
-    if (func(i - 1, w - a[i - 1], a)) return memo[i][w] = 1;
-
-    // どちらも false の場合は false
-    return memo[i][w] = 0;
-}
-int n;
-vector<vector<int>> Time(n, vector<int>(n));
-int greedy(){
-    vector <int> ave(n);
-    rep(i, n) { int sum = 0;
-        rep(j, n) {
-            if (i == j) sum-=Time[i][j];
-            sum += Time[i][j];
+        // 再帰的に探索
+        if (res > rec(prev_bit, u) + dist[u][v]) {
+            res = rec(prev_bit, u) + dist[u][v];
         }
-        ave[i] = sum/n;
     }
-    rep(i,n){
-        rep(j, n) { Time[i][j] -= ave[i] + ave[j];
-         }
-    }
+
+    return dp[bit][v] = res; // メモしながらリターン
 }
 
- 
-
-int main() {
-    cin.tie(0);
-    cout.tie(0);
-    ios::sync_with_stdio(false);
-
+int main()
+{
     // 入力
-    int N, W;
-    cin >> N >> W;
-    vector<int> a(N);
-    for (int i = 0; i < N; ++i) cin >> a[i];
+    long long int k;
+    cin >> N>>k;
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cin >> dist[i][j];
+        }
+    }
 
-    // 再帰的に解く
-    memo.assign(N+1, vector<int>(W+1, -1));
-    if (func(N, W, a)) cout << "Yes" << endl;
-    else cout << "No" << endl;
+    // テーブルを全部 -1 にしておく (-1 でなかったところは探索済)
+    for (int bit = 0; bit < (1<<N); ++bit) for (int v = 0; v < N; ++v) dp[bit][v] = -1;
 
+    // 探索
+    long long int res = INF;
+    int count = 0;
+    for (int v = 0; v < N; ++v) {
+        res = rec((1<<N)-1, v);
+        if (res == k) count++;   
+    }
+    cout << count << endl;
 }
